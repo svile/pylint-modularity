@@ -3,7 +3,7 @@ authors = ["Svilen Piralkov <svile@users.noreply.github.com>"]
 description = "Pylint plugin to help enforce separation of concerns through import restrictions."
 name = "pylint-import-restriction"
 readme = "README.md"
-version = "0"
+version = "0.dev"
 
 [tool.poetry.dependencies]
 python = "^3.11"
