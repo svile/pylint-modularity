@@ -15,6 +15,4 @@ jobs:
       - run: poetry install
       - run: poetry version ${{ github.ref_name }}
       - run: poetry build
-      - uses: JRubics/poetry-publish@v1
-        with:
-          pypi_token: ${{ secrets.PYPI_TOKEN }}
+      - run: poetry publish
