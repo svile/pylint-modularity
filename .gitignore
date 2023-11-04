@@ -1,0 +1,12 @@
+# Python environment
+.venv/
+__pycache__/
+.env
+.python-version
+
+# Unit test and coverage
+.pytest_cache/
+.coverage
+
+# MyPy cache
+.mypy_cache/
