@@ -1,0 +1,18 @@
+name: Release
+
+on:
+  push:
+    # Trigger on any tag
+    tags: [ '*' ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+      - uses: abatilo/actions-poetry@v2
+      - run: poetry install
+      - run: poetry version ${{ github.ref_name }}
+      - run: poetry build
+      - run: poetry publish
