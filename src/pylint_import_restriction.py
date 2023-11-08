@@ -1,6 +1,6 @@
 """Pylint module: Enforce separation of concerns through import restrictions."""
 import re
-from astroid.nodes import NodeNG
+from astroid.nodes import NodeNG, Module, Import, ImportFrom
 from pylint.checkers import BaseChecker
 from pylint.lint import PyLinter
 
@@ -30,7 +30,7 @@ class ImportRestriction(BaseChecker):
     }
     options = (
         (
-            "import_restrictions",
+            "import-restriction",
             {
                 "type": "string",
                 "help": "A comma separated list specifying restrictions per module. "
@@ -49,14 +49,17 @@ class ImportRestriction(BaseChecker):
         (after initialization).
         """
         # Parse and prepare the plugin configuration
-        for pair in self.linter.config.import_restrictions.split(";"):
+        for pair in getattr(self.linter.config, "import-restriction", "").split(";"):
             restrictions = pair.split("->")
             if len(restrictions) == 2:
                 self._restrictions.append(
-                    (re.compile(restrictions[0]), re.compile(restrictions[1]))
+                    (
+                        re.compile(restrictions[0].strip()),
+                        re.compile(restrictions[1].strip()),
+                    )
                 )
 
-    def visit_module(self, node: NodeNG) -> None:
+    def visit_module(self, node: Module) -> None:
         """
         Called the first time when the host module check begins.
 
@@ -65,7 +68,7 @@ class ImportRestriction(BaseChecker):
         """
         self._current_module = node.name
 
-    def visit_import(self, node: NodeNG) -> None:
+    def visit_import(self, node: Import) -> None:
         """
         Called if an `import ...` is detected in the host module being checked.
 
@@ -75,7 +78,7 @@ class ImportRestriction(BaseChecker):
         for name, _ in node.names:
             self._check_module(node, name)
 
-    def visit_importfrom(self, node: NodeNG) -> None:
+    def visit_importfrom(self, node: ImportFrom) -> None:
         """
         Called if an `from ... import ...` is detected in the host module being checked.
 
