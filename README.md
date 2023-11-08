@@ -14,5 +14,7 @@ load-plugins = "pylint_import_restriction"
 import-restriction="module_visited->module_import_restriction;module2_visited->restriction\\..*"
 ```
 The restrictions configured as part of `import-restriction` setting, and as represented above take the following shape - `module_visited -> import_restriction`
-- `module_visited`: is the module which is presently being looked at. This could be a RegEx in order to capture several modules.
-- `import_restriction`:
+- `module_visited`: The module which is presently being looked at. This could be a RegEx in order to capture several modules.
+- `->`: The separator denoting the module being investigated (on the left), and the restricted imports (on the right)
+- `import_restriction`: The module which is restricted from being imported within the module being investigated. This could be a RegEx in order to capture several modules.
+- `;`: This separator can be used to list out restrictions for more than one module or more than one group of modules, e.g.: `module_visited -> import_restriction; module2 -> restriction2; ...`
