@@ -7,7 +7,9 @@ import pylint_import_restriction
 
 class TestChecker(pylint.testutils.CheckerTestCase):
     CHECKER_CLASS = pylint_import_restriction.ImportRestriction
-    CONFIG: dict[str, str] = {"import-restriction": "module.* -> .*restricted.*;"}
+    CONFIG: dict[str, list[str]] = {
+        "import-restriction": ["module.* -> .*restricted.*"]
+    }
 
     def test_import_restriction(self) -> None:
         import_node = astroid.extract_node(
