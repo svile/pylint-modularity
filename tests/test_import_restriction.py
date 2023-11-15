@@ -7,9 +7,7 @@ import pylint_import_restriction
 
 class TestChecker(pylint.testutils.CheckerTestCase):
     CHECKER_CLASS = pylint_import_restriction.ImportRestriction
-    CONFIG: dict[str, list[str]] = {
-        "import-restriction": ["module.* -> .*restricted.*"]
-    }
+    CONFIG: dict[str, str] = {"import_restriction": "module.* -> .*restricted.*"}
 
     def test_import_restriction(self) -> None:
         import_node = astroid.extract_node(
@@ -30,7 +28,7 @@ class TestChecker(pylint.testutils.CheckerTestCase):
                 end_col_offset=21,
             ),
         ):
-            self.checker._current_module = "module.under.test"
+            setattr(self.checker, "_current_module", "module.under.test")
             self.checker.visit_import(import_node)
 
     def test_from_import_restriction(self) -> None:
@@ -51,7 +49,7 @@ class TestChecker(pylint.testutils.CheckerTestCase):
             end_col_offset=29,
         )
         with self.assertAddsMessages(result_message, result_message):
-            self.checker._current_module = "module.under.test"
+            setattr(self.checker, "_current_module", "module.under.test")
             self.checker.visit_importfrom(import_node)
 
     def test_from_relative_import_restriction(self) -> None:
@@ -72,7 +70,7 @@ class TestChecker(pylint.testutils.CheckerTestCase):
             end_col_offset=36,
         )
         with self.assertAddsMessages(result_message, result_message, result_message):
-            self.checker._current_module = "module.under.test"
+            setattr(self.checker, "_current_module", "module.under.test")
             self.checker.visit_importfrom(import_node)
 
     def test_import_non_restriction(self) -> None:
@@ -102,4 +100,4 @@ class TestChecker(pylint.testutils.CheckerTestCase):
         )
         with self.assertNoMessages():
             self.checker.visit_module(import_node)
-        assert self.checker._current_module == "some.module.under.test"
+        assert getattr(self.checker, "_current_module") == "some.module.under.test"

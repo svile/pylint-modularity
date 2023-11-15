@@ -49,7 +49,7 @@ class ImportRestriction(BaseChecker):
         (after initialization).
         """
         # Parse and prepare the plugin configuration
-        for pair in getattr(self.linter.config, "import-restriction", ""):
+        for pair in self.linter.config.import_restriction.split(",") or []:
             restrictions = pair.split("->")
             if len(restrictions) == 2:
                 self._restrictions.append(
