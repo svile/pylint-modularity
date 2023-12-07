@@ -1,7 +1,7 @@
 [tool.poetry]
 authors = ["Svilen Piralkov <svile@users.noreply.github.com>"]
 description = "Pylint plugin to help enforce separation of concerns through import restrictions."
-name = "pylint-import-restriction"
+name = "pylint-modularity"
 readme = "README.md"
 version = "0.dev"
 
@@ -31,7 +31,7 @@ line-length = 88
 # Pylint linter configuration
 # ---------------------------------
 [tool.pylint.MAIN]
-load-plugins = "pylint_import_restriction"
+load-plugins = "pylint_modularity"
 
 [tool.pylint.FORMAT]
 max-line-length = 88

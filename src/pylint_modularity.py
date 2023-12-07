@@ -1,4 +1,4 @@
-"""Pylint module: Enforce separation of concerns through import restrictions."""
+"""Pylint module: Enforce separation of concerns."""
 import re
 from astroid.nodes import NodeNG, Module, Import, ImportFrom
 from pylint.checkers import BaseChecker
@@ -7,7 +7,7 @@ from pylint.lint import PyLinter
 
 class ImportRestriction(BaseChecker):
     """
-    A Pylint plugin which enforces separation of concerns through import restrictions.
+    A Pylint plugin which enforces separation of concerns.
 
     Attributes:
         name: The name of this plugin.
@@ -19,7 +19,7 @@ class ImportRestriction(BaseChecker):
             configuration.
     """
 
-    name = "import-restriction"
+    name = "modularity"
     priority = -1
     msgs = {
         "E7101": (

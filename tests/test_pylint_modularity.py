@@ -2,11 +2,11 @@ import astroid
 from astroid.builder import AstroidBuilder
 from pylint.interfaces import UNDEFINED
 import pylint.testutils
-import pylint_import_restriction
+import pylint_modularity
 
 
 class TestChecker(pylint.testutils.CheckerTestCase):
-    CHECKER_CLASS = pylint_import_restriction.ImportRestriction
+    CHECKER_CLASS = pylint_modularity.ImportRestriction
     CONFIG: dict[str, str] = {"import_restriction": "module.* -> .*restricted.*"}
 
     def test_import_restriction(self) -> None:
